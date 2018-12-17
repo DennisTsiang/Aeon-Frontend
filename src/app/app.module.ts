@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { UploaderComponent } from './uploader/uploader.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UploaderComponent
   ],
   imports: [
     BrowserModule
