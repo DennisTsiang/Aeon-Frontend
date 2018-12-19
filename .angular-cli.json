@@ -22,7 +22,6 @@
         "styles.css"
       ],
       "scripts": [
-        "dropzone.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

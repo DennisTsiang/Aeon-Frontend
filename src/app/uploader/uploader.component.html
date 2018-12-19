@@ -1,5 +1,4 @@
-<form class="dropzone uploader" action="/file-upload">
-  <div class="uploader__text dz-message">
-    Select or drop .apk file
-  </div>
-</form>
+<div class="uploader">
+  <dropzone [config]="dropzoneConfig" [message]="'Select or drop .apk file'"
+    (success)="onUploadSuccess()"></dropzone>
+</div>
