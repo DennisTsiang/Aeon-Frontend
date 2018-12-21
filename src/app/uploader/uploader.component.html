@@ -1,4 +1,4 @@
 <div class="uploader">
   <dropzone [config]="dropzoneConfig" [message]="'Select or drop .apk file'"
-    (success)="onUploadSuccess()"></dropzone>
+    (success)="onUploadSuccess($event)"></dropzone>
 </div>

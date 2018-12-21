@@ -3,6 +3,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
+import { uploadResponse } from '../model/entities';
 
 @Component({
   selector: 'app-uploader',
@@ -27,17 +28,22 @@ export class UploaderComponent implements OnInit {
     return dropzoneConfig;
   }
 
-  public onUploadSuccess(): void {
-    this.sendEnergyRequest().subscribe(message => console.log(message));
+  public onUploadSuccess(event: any): void {
+    //Retrieve server response from event
+    const serverResponse: uploadResponse = event[1];
+    console.log(serverResponse.filename);
+    this.sendEnergyRequest(serverResponse.filename)
+      .subscribe(message => console.log(message));
   }
 
-  private sendEnergyRequest(): Observable<string> {
+  private sendEnergyRequest(filename: string): Observable<string> {
     // TODO: Change responseType to JSON to get the output results
-    return this.http.get(this.HOSTNAME + '/energy-eval', {responseType: 'text'})
-      .catch((error: any) => {
-        console.log(error);
-        return Observable.of("Error occured.")
-      });
+    return this.http.get(this.HOSTNAME + '/energy-eval/'+filename+'/12',
+       {responseType: 'text'})
+       .catch((error: any) => {
+          console.log(error);
+          return Observable.of("Error occured.")
+       });
   }
 
 }
