@@ -1,0 +1,23 @@
+.uploader {
+  width: 650px;
+  border: 2px solid #396B84;
+  border-radius: 4px;
+  background-color: #CCE8ED;
+  cursor: pointer;
+  padding-bottom: 25px;
+  margin: auto;
+}
+
+.uploader__text {
+  color: #28538F;
+  cursor: pointer;
+  font-weight: 400;
+  margin-top: 30px;
+}
+
+.uploader:hover{
+  background-color: #B2E7F0;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 150ms linear;
+}
