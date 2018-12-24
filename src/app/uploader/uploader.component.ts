@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
+import { EnergyDataResponse } from '../model/entities';
 
 @Component({
   selector: 'app-uploader',
@@ -30,16 +31,18 @@ export class UploaderComponent implements OnInit {
 
   public onUploadButtonClick(): void {
     this.sendEnergyRequest()
-      .subscribe(message => console.log(message));
+      .subscribe((message: EnergyDataResponse) => console.log(message));
   }
 
-  private sendEnergyRequest(): Observable<string> {
-    // TODO: Change responseType to JSON to get the output results
-    return this.http.get(this.HOSTNAME + '/energy-eval/' + this.filename + '/'
-      + this.scriptname, {responseType: 'text'})
+  private sendEnergyRequest(): Observable<EnergyDataResponse> {
+    return this.http.get<EnergyDataResponse>(this.HOSTNAME + '/energy-eval/' + this.filename + '/'
+      + this.scriptname)
         .catch((error: any) => {
           console.log(error);
-          return Observable.of("Error occured.")
+          return Observable.of({
+              hardwareData: null,
+              apiData: null
+          })
         });
   }
 

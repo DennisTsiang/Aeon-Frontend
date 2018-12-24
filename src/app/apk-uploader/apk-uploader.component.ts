@@ -3,7 +3,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
-import { uploadResponse } from '../model/entities';
+import { UploadResponse } from '../model/entities';
 
 @Component({
   selector: 'app-apk-uploader',
@@ -33,7 +33,7 @@ export class ApkUploaderComponent implements OnInit {
 
   public onUploadSuccess(event: any): void {
     //Retrieve server response from event
-    const serverResponse: uploadResponse = event[1];
+    const serverResponse: UploadResponse = event[1];
     console.log(serverResponse.filename);
     this.filename.emit(serverResponse.filename);
   }
