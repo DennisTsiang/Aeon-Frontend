@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
-import { EnergyDataResponse } from '../model/entities';
+import { EnergyDataResponse, CSVData } from '../model/entities';
 
 @Component({
   selector: 'app-uploader',
@@ -15,6 +15,9 @@ export class UploaderComponent implements OnInit {
   private readonly HOSTNAME = "http://localhost:8081";
   public filename: string = "";
   public scriptname: string = "";
+
+  @Output()
+  public data: EventEmitter<EnergyDataResponse> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -30,8 +33,12 @@ export class UploaderComponent implements OnInit {
   }
 
   public onUploadButtonClick(): void {
-    this.sendEnergyRequest()
-      .subscribe((message: EnergyDataResponse) => console.log(message));
+    //this.sendEnergyRequest()
+      //.subscribe((message: EnergyDataResponse) => {
+        //console.log("Emitting data");
+        //this.data.emit(message);
+      //});
+    this.data.emit(this.testData());
   }
 
   private sendEnergyRequest(): Observable<EnergyDataResponse> {
@@ -39,15 +46,39 @@ export class UploaderComponent implements OnInit {
       + this.scriptname)
         .catch((error: any) => {
           console.log(error);
-          return Observable.of({
-              hardwareData: null,
-              apiData: null
-          })
+          return Observable.of(this.testData());
         });
   }
 
   public isDisabled(): boolean {
     return this.filename == "" || this.scriptname == "";
+  }
+
+  private testData(): EnergyDataResponse {
+    let hardwareDatapoints: CSVData[] = [
+      ["Cell standby", 0.00123],
+      ["Screen", 0.000616],
+      ["Wifi", 0.000411],
+      ["Idle", 0.000411]
+    ];
+    let apiDatapoints: CSVData[] = [
+      ["Anstop$resetButtonListener.onClick",0.00518514],
+      ["Anstop.onCreate",0.000226966],
+      ["Anstop.readSettings",0.000113483],
+      ["Clock$minhandler.<init>",0.0],
+      ["Anstop.onRestoreInstanceState",0.0],
+      ["Anstop.setupGesture",0.0],
+      ["Clock$sechandler.<init>",0.0],
+      ["Clock$hourhandler.<init>",0.0],
+      ["Anstop.<init>",0.0],
+      ["Clock$dsechandler.<init>",0.0],
+      ["Anstop.onResume",0.0],
+    ];
+
+    return {
+      hardwareData: hardwareDatapoints,
+      apiData: apiDatapoints,
+    };
   }
 
 }
