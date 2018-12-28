@@ -15,6 +15,12 @@ export class UploaderComponent implements OnInit {
   private readonly HOSTNAME = "http://localhost:8081";
   public filename: string = "";
   public scriptname: string = "";
+  public options: string[] = [
+    "News", "Gaming", "Business", "Social Media", "Lifestyle", "Productivity",
+    "Photography", "Video Players & Editors"
+  ];
+  // Also sets default selected option to one with value of null
+  public selected: string = null;
 
   @Output()
   public data: EventEmitter<EnergyDataResponse> = new EventEmitter();
@@ -33,25 +39,31 @@ export class UploaderComponent implements OnInit {
   }
 
   public onUploadButtonClick(): void {
-    //this.sendEnergyRequest()
-      //.subscribe((message: EnergyDataResponse) => {
-        //console.log("Emitting data");
-        //this.data.emit(message);
-      //});
-    this.data.emit(this.testData());
+    this.sendEnergyRequest()
+      .subscribe((message: EnergyDataResponse) => {
+        console.log("Emitting data");
+        this.data.emit(message);
+      });
+    //this.data.emit(this.testData());
+  }
+
+  public isDisabled(): boolean {
+    return this.filename == "" || this.scriptname == ""
+      || !this.selected;
+  }
+
+  public onSelectChange(selected: string): void {
+    console.log(selected);
   }
 
   private sendEnergyRequest(): Observable<EnergyDataResponse> {
-    return this.http.get<EnergyDataResponse>(this.HOSTNAME + '/energy-eval/' + this.filename + '/'
-      + this.scriptname)
+    return this.http.get<EnergyDataResponse>(
+      this.HOSTNAME + '/energy-eval/' + this.filename + '/'
+      + this.scriptname+'/'+this.selected)
         .catch((error: any) => {
           console.log(error);
           return Observable.of(this.testData());
         });
-  }
-
-  public isDisabled(): boolean {
-    return this.filename == "" || this.scriptname == "";
   }
 
   private testData(): EnergyDataResponse {

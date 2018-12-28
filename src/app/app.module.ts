@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { HttpClientModule } from '@angular/common/http';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -27,6 +28,7 @@ import { GraphPlotHelperService } from './services/graph-plot-helper.service'
     HttpClientModule,
     ButtonsModule.forRoot(),
     ChartsModule,
+    FormsModule,
   ],
   providers: [
     GraphPlotHelperService

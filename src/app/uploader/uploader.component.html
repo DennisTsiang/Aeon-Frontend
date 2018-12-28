@@ -2,6 +2,21 @@
   <app-apk-uploader (filename)="onFilenameUpdate($event)"></app-apk-uploader>
   <app-script-uploader (scriptname)="onScriptUpdate($event)">
   </app-script-uploader>
-  <button type="button" class="btn btn-primary submitButton" 
+  <div class="input-group category-selector">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">Category</label>
+    </div>
+    <select class="custom-select" id="inputGroupSelect01"
+      name="categorySelector" [(ngModel)]="selected"
+      (ngModelChange)="onSelectChange(selected)"
+    >
+      <option selected [ngValue]="null">Choose...</option>
+      <option *ngFor="let option of options.sort(); index as i" [value]="i">
+        {{option}}
+      </option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-primary submitButton"
+    [disabled]="isDisabled()"
     (click)="onUploadButtonClick()">Submit</button>
 </div>
