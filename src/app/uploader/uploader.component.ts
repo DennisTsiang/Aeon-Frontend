@@ -90,6 +90,7 @@ export class UploaderComponent implements OnInit {
     return {
       hardwareData: hardwareDatapoints,
       apiData: apiDatapoints,
+      rating: "A",
     };
   }
 

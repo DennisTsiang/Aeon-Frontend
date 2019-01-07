@@ -2,3 +2,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.rating-container {
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+}

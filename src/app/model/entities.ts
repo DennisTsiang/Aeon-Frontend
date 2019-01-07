@@ -13,4 +13,5 @@ export type CSVData = [string, number];
 export interface EnergyDataResponse {
   hardwareData: CSVData[] | null;
   apiData: CSVData[] | null;
+  rating: string;
 }

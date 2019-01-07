@@ -13,6 +13,7 @@ export class AppComponent {
   public showData = false;
   public hardwareData: GraphData = null;
   public apiData: GraphData = null;
+  public rating: string = null;
 
   public onData(energyDataResponse: EnergyDataResponse): void {
     console.log("Received energy data response");
@@ -25,7 +26,11 @@ export class AppComponent {
     let apiValues = energyDataResponse.apiData.map(dataPair => dataPair[1]);
     this.hardwareData = { labels: hardwareLabels, values: hardwareValues };
     this.apiData = { labels: apiLabels, values: apiValues };
+    this.rating = energyDataResponse.rating;
     this.showData = true;
+    setTimeout(() => document.getElementById("rating")
+      .scrollIntoView({behavior: 'smooth', block: "end"})
+    , 1000);
   }
 
 }
