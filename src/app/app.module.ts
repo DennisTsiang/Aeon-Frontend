@@ -7,20 +7,20 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
-import { ApkUploaderComponent } from './apk-uploader/apk-uploader.component';
-import { ScriptUploaderComponent } from './script-uploader/script-uploader.component';
 import { UploaderComponent } from './uploader/uploader.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
-import { GraphPlotHelperService } from './services/graph-plot-helper.service'
+import { GraphPlotHelperService } from './services/graph-plot-helper.service';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { DropzoneUploaderComponent } from './dropzone-uploader/dropzone-uploader.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    ApkUploaderComponent,
-    ScriptUploaderComponent,
     UploaderComponent,
-    PieChartComponent
+    PieChartComponent,
+    SpinnerComponent,
+    DropzoneUploaderComponent
   ],
   imports: [
     BrowserModule,

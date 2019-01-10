@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScriptUploaderComponent } from './script-uploader.component';
+import { DropzoneUploaderComponent } from './dropzone-uploader.component';
 
-describe('ScriptUploaderComponent', () => {
-  let component: ScriptUploaderComponent;
-  let fixture: ComponentFixture<ScriptUploaderComponent>;
+describe('DropzoneUploaderComponent', () => {
+  let component: DropzoneUploaderComponent;
+  let fixture: ComponentFixture<DropzoneUploaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScriptUploaderComponent ]
+      declarations: [ DropzoneUploaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScriptUploaderComponent);
+    fixture = TestBed.createComponent(DropzoneUploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

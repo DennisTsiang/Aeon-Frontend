@@ -4,12 +4,14 @@
   </h1>
   <img width="300" alt="Boostergy Logo" src="assets/boostergy_logo.png"/>
   <h2>Please upload an apk and monkeyrunner script file </h2>
-  <app-uploader (data)="onData($event)"></app-uploader>
-  <div *ngIf="showData" class="chart-section d-flex">
-    <app-pie-chart [data]="hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
-    <app-pie-chart [data]="apiData" [title]="'API Costs'"></app-pie-chart>
-  </div>
-  <div *ngIf="showData" class="rating-container" id="rating">
-    Your app's rating: {{ rating }}
+  <app-uploader (data)="onData($event)" (hideData)="onHideData($event)"></app-uploader>
+  <div *ngIf="showData">
+    <div class="chart-section d-flex">
+      <app-pie-chart [data]="hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
+      <app-pie-chart [data]="apiData" [title]="'API Costs'"></app-pie-chart>
+    </div>
+    <div class="rating-container" id="rating">
+      Your app's rating: {{ rating }}
+    </div>
   </div>
 </div>

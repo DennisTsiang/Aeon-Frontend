@@ -33,4 +33,8 @@ export class AppComponent {
     , 1000);
   }
 
+  public onHideData() {
+    this.showData = false;
+  }
+
 }

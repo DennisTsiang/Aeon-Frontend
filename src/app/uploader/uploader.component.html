@@ -1,7 +1,20 @@
 <div class="upload-section">
-  <app-apk-uploader (filename)="onFilenameUpdate($event)"></app-apk-uploader>
-  <app-script-uploader (scriptname)="onScriptUpdate($event)">
-  </app-script-uploader>
+  <app-dropzone-uploader
+     [hostname]="HOSTNAME"
+     [message]="'Select or drop .apk file'"
+     [path]="'/file-upload/apk'"
+     [ext]="'.apk'"
+     [clear]="clear"
+     (filename)="onFilenameUpdate($event)">
+  </app-dropzone-uploader>
+  <app-dropzone-uploader class="mt-3"
+     [hostname]="HOSTNAME"
+     [message]="'Select or drop monkeyrunner .txt file'"
+     [path]="'/file-upload/monkeyrunner'"
+     [ext]="'.txt'"
+     [clear]="clear"
+     (filename)="onScriptUpdate($event)">
+  </app-dropzone-uploader>
   <div class="input-group category-selector">
     <div class="input-group-prepend">
       <label class="input-group-text" for="inputGroupSelect01">Category</label>
@@ -16,7 +29,15 @@
       </option>
     </select>
   </div>
-  <button type="button" class="btn btn-primary submitButton"
-    [disabled]="isDisabled()"
-    (click)="onUploadButtonClick()">Submit</button>
+  <div class="d-flex">
+    <button type="button" class="btn btn-primary custom-button"
+      (click)="onClearButtonClick()">Clear</button>
+    <button type="button" class="btn btn-primary custom-button"
+      [disabled]="isDisabled()"
+      (click)="onUploadButtonClick()">Submit</button>
+  </div>
+  <div class="loader" *ngIf="showLoadingIcon">
+    Calculating energy rating. Please wait...
+    <app-spinner></app-spinner>
+  </div>
 </div>

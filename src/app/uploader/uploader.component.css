@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.submitButton {
+.custom-button {
   width: 12rem;
   margin: 2rem;
 }
@@ -13,4 +13,8 @@
 .category-selector {
   margin-top: 30px;
   width: 30rem;
+}
+
+.loader {
+  margin-bottom: 30px;
 }

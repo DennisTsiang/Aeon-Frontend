@@ -8,3 +8,8 @@
   justify-content: center;
   font-size: 5rem;
 }
+
+.clear-button {
+  width: 12rem;
+  margin: 2rem;
+}

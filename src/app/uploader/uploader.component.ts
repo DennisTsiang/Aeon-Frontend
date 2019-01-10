@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import { EnergyDataResponse, CSVData } from '../model/entities';
 
@@ -12,7 +13,7 @@ import { EnergyDataResponse, CSVData } from '../model/entities';
 export class UploaderComponent implements OnInit {
 
   // TODO: Change this to an input sent from root
-  private readonly HOSTNAME = "http://localhost:8081";
+  public readonly HOSTNAME = "http://localhost:8081";
   public filename: string = "";
   public scriptname: string = "";
   public options: string[] = [
@@ -21,9 +22,14 @@ export class UploaderComponent implements OnInit {
   ];
   // Also sets default selected option to one with value of null
   public selected: string = null;
+  public showLoadingIcon: boolean = false;
+  public clear: Subject<boolean> = new Subject;
 
   @Output()
   public data: EventEmitter<EnergyDataResponse> = new EventEmitter();
+
+  @Output()
+  public hideData: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -39,9 +45,11 @@ export class UploaderComponent implements OnInit {
   }
 
   public onUploadButtonClick(): void {
+    this.showLoadingIcon = true;
     this.sendEnergyRequest()
       .subscribe((message: EnergyDataResponse) => {
         console.log("Emitting data");
+        this.showLoadingIcon = false;
         this.data.emit(message);
       });
     //this.data.emit(this.testData());
@@ -55,6 +63,15 @@ export class UploaderComponent implements OnInit {
   public onSelectChange(selected: string): void {
     console.log(selected);
   }
+
+  public onClearButtonClick(): void {
+    this.clear.next(true);
+    this.filename = "";
+    this.scriptname = "";
+    this.selected = null;
+    this.hideData.emit(true);
+  }
+
 
   private sendEnergyRequest(): Observable<EnergyDataResponse> {
     return this.http.get<EnergyDataResponse>(
