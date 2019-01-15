@@ -15,3 +15,10 @@ export interface EnergyDataResponse {
   apiData: CSVData[] | null;
   rating: string;
 }
+
+export interface EnergyEvaluationRequest {
+  filename: string;
+  scriptname?: string;
+  category: string;
+  method: string;
+}

@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
-import { EnergyDataResponse, CSVData } from '../model/entities';
+import {
+  EnergyEvaluationRequest,
+  EnergyDataResponse,
+  CSVData
+} from '../model/entities';
 
 @Component({
   selector: 'app-uploader',
@@ -16,12 +20,16 @@ export class UploaderComponent implements OnInit {
   public readonly HOSTNAME = "http://localhost:8081";
   public filename: string = "";
   public scriptname: string = "";
-  public options: string[] = [
+  public categories: string[] = [
     "News", "Gaming", "Business", "Social Media", "Lifestyle", "Productivity",
     "Photography", "Video Players & Editors"
   ];
+  public testingMethods: string[] = [
+    "Monkeyrunner", "DroidMate-2"
+  ];
   // Also sets default selected option to one with value of null
-  public selected: string = null;
+  public selectedCategory: string = null;
+  public selectedTestingMethod: string = "DroidMate-2";
   public showLoadingIcon: boolean = false;
   public clear: Subject<boolean> = new Subject;
 
@@ -52,13 +60,17 @@ export class UploaderComponent implements OnInit {
         this.showLoadingIcon = false;
         this.data.emit(message);
       });
+    setTimeout(() => document.getElementById("loader")
+      .scrollIntoView({behavior: 'smooth', block: "end"})
+    , 500);
     //this.data.emit(this.testData());
   }
 
   public isDisabled(): boolean {
-    return this.filename == "" || this.scriptname == ""
-      || !this.selected;
-  }
+    return (this.filename == ""
+      || !this.selectedCategory || !this.selectedTestingMethod) ||
+      (this.selectedTestingMethod == 'Monkeyrunner' && !this.scriptname);
+}
 
   public onSelectChange(selected: string): void {
     console.log(selected);
@@ -68,17 +80,25 @@ export class UploaderComponent implements OnInit {
     this.clear.next(true);
     this.filename = "";
     this.scriptname = "";
-    this.selected = null;
+    this.selectedCategory = null;
     this.hideData.emit(true);
   }
 
+  public methodSelected(selection: string): boolean {
+    return this.selectedTestingMethod == selection;
+  }
 
   private sendEnergyRequest(): Observable<EnergyDataResponse> {
-    return this.http.get<EnergyDataResponse>(
-      this.HOSTNAME + '/energy-eval/' + this.filename + '/'
-      + this.scriptname+'/'+this.selected)
+    let request: EnergyEvaluationRequest = {
+      filename: this.filename,
+      category: this.selectedCategory,
+      method: this.selectedTestingMethod,
+    };
+    return this.http.post<EnergyDataResponse>(this.HOSTNAME + '/energy-eval/',
+       request)
         .catch((error: any) => {
           console.log(error);
+          console.log("Returning test data");
           return Observable.of(this.testData());
         });
   }
