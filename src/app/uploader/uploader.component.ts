@@ -94,6 +94,9 @@ export class UploaderComponent implements OnInit {
       category: this.selectedCategory,
       method: this.selectedTestingMethod,
     };
+    if (this.selectedTestingMethod == "Monkeyrunner") {
+      request.scriptname = this.scriptname;
+    }
     return this.http.post<EnergyDataResponse>(this.HOSTNAME + '/energy-eval/',
        request)
         .catch((error: any) => {
