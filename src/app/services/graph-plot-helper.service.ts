@@ -7,13 +7,13 @@ export class GraphPlotHelperService {
   constructor() { }
 
   public thresholdData(values: number[], labels: string[],
-                       minimumThreshold = 1): GraphData {
+                       minimumThreshold = 1, maximumItems = 5): GraphData {
     // Assume values are already sorted in desc order
     let valuesSum: number = values.reduce((x, y) => x + y);
     let normalizedValues: number[] = values.map((x) => x * 100.0 / valuesSum);
 
     let thresholdIndex: number = 0;
-    while (thresholdIndex < normalizedValues.length &&
+    while (thresholdIndex < Math.min(maximumItems, normalizedValues.length) &&
            normalizedValues[thresholdIndex] > minimumThreshold) {
       thresholdIndex += 1;
     }
