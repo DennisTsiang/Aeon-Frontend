@@ -9,7 +9,7 @@ declare var Chart: any;
 })
 
 export class AppComponent {
-  public title = 'Boostergy';
+  public title = 'Aeon';
   public showData = false;
   public hardwareData: GraphData = null;
   public apiData: GraphData = null;
