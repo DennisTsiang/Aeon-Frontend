@@ -6,12 +6,15 @@
   <h2>Please upload an apk and select testing method</h2>
   <app-uploader (data)="onData($event)" (hideData)="onHideData($event)"></app-uploader>
   <div *ngIf="showData">
+    <div class="total-energy">
+      Total energy consumed (J): {{ truncatedTotalEnergy }}
+    </div>
     <div class="chart-section d-flex">
       <app-pie-chart [data]="hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
       <app-pie-chart [data]="apiData" [title]="'API Costs'"></app-pie-chart>
     </div>
     <div class="rating-container" id="rating">
-      Your app's rating: {{ rating }}
+      Your app's rating: <span [class]="ratingClass">{{ rating }}</span>
     </div>
   </div>
 </div>

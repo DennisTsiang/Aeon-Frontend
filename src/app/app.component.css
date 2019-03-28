@@ -3,6 +3,11 @@
   justify-content: center;
 }
 
+.total-energy {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
 .rating-container {
   align-items: center;
   justify-content: center;
@@ -12,4 +17,24 @@
 .clear-button {
   width: 12rem;
   margin: 2rem;
+}
+
+.rating-A {
+  color: #4FBA47;
+}
+
+.rating-B {
+  color: #FDF302;
+}
+
+.rating-C {
+  color: #FBBB0C;
+}
+
+.rating-D {
+  color: #F37019;
+}
+
+.rating-E {
+  color: #EE151F;
 }
