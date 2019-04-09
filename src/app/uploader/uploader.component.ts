@@ -18,6 +18,7 @@ export class UploaderComponent implements OnInit {
 
   // TODO: Change this to an input sent from root
   public readonly HOSTNAME = "http://localhost:8081";
+  public uploadRows: number[] = [];
   public filename: string = "";
   public scriptname: string = "";
   public specificCategories: string[] = [
@@ -89,6 +90,18 @@ export class UploaderComponent implements OnInit {
 
   public methodSelected(selection: string): boolean {
     return this.selectedTestingMethod == selection;
+  }
+
+  public addRow(): void {
+    this.uploadRows.push(Date.now());
+  }
+
+  public removeRow(index): void {
+    this.uploadRows.splice(index, 1);
+  }
+
+  public trackByFn(index, item) {
+    return item;
   }
 
   private sendEnergyRequest(): Observable<EnergyDataResponse> {

@@ -12,7 +12,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 import { GraphPlotHelperService } from './services/graph-plot-helper.service';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { DropzoneUploaderComponent } from './dropzone-uploader/dropzone-uploader.component'
+import { DropzoneUploaderComponent } from './dropzone-uploader/dropzone-uploader.component';
 
 @NgModule({
   declarations: [

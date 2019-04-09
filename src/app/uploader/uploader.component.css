@@ -22,3 +22,41 @@
 option:disabled {
   color: #6c757d;
 }
+
+.upload-row {
+  width: 700px;
+  margin-bottom: 1.5rem;
+}
+
+.upload-item {
+  flex-grow: 1;
+}
+
+.plus-sign {
+  margin: 45px 0 10px 0;
+}
+
+.minus-sign {
+  margin: auto -70px auto 50px;
+  position: relative;
+}
+
+.fa-minus {
+  transform: scale(5);
+  color: red;
+}
+
+.fa-plus {
+  transform: scale(5);
+  color: green;
+  cursor: pointer;
+}
+
+.minus-clickable {
+  position: absolute;
+  width: 70px;
+  height: 20px;
+  top: 0;
+  left: -25px;
+  cursor: pointer;
+}
