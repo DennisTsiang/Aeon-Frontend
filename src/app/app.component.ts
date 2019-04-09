@@ -16,6 +16,8 @@ export class AppComponent {
   public truncatedTotalEnergy: string = null;
   public rating: string = null;
   public ratingClass: string = null;
+  public percentile: string = null;
+  public levelIndicator: string = null;
 
   public onData(energyDataResponse: EnergyDataResponse): void {
     console.log("Received energy data response");
@@ -33,6 +35,8 @@ export class AppComponent {
     this.apiData = { labels: apiLabels, values: apiValues };
     this.rating = energyDataResponse.rating;
     this.ratingClass = "rating-" + this.rating;
+    this.percentile = energyDataResponse.percentile;
+    this.levelIndicator = parseFloat(this.percentile) <= 50 ? "top" : "bottom";
     this.showData = true;
     setTimeout(() => document.getElementById("rating")
       .scrollIntoView({behavior: 'smooth', block: "end"})

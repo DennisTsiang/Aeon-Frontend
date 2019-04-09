@@ -18,3 +18,7 @@
 .loader {
   margin-bottom: 30px;
 }
+
+option:disabled {
+  color: #6c757d;
+}

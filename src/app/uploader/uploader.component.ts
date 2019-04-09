@@ -20,7 +20,10 @@ export class UploaderComponent implements OnInit {
   public readonly HOSTNAME = "http://localhost:8081";
   public filename: string = "";
   public scriptname: string = "";
-  public categories: string[] = [
+  public specificCategories: string[] = [
+    "Alarm Clocks", "Dictionary", "Reddit Browsers", "Web Browsers"
+  ];
+  public generalCategories: string[] = [
     "News", "Gaming", "Business", "Social Media", "Lifestyle", "Productivity",
     "Photography", "Video Players & Editors"
   ];
@@ -131,6 +134,7 @@ export class UploaderComponent implements OnInit {
       hardwareData: hardwareDatapoints,
       apiData: apiDatapoints,
       rating: "A",
+      percentile: "34",
     };
   }
 

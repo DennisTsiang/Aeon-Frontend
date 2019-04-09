@@ -14,6 +14,7 @@ export interface EnergyDataResponse {
   hardwareData: CSVData[] | null;
   apiData: CSVData[] | null;
   rating: string;
+  percentile: string;
 }
 
 export interface EnergyEvaluationRequest {

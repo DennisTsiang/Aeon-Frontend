@@ -41,8 +41,15 @@
       name="categorySelector" [(ngModel)]="selectedCategory"
       (ngModelChange)="onSelectChange(selectedCategory)"
     >
-      <option selected [ngValue]="null">Choose...</option>
-      <option *ngFor="let option of categories.sort(); index as i" [value]="i">
+      <option selected [ngValue]="null" disabled>Choose...</option>
+      <option [ngValue]="null" disabled>---Specific Categories---</option>
+      <option *ngFor="let option of specificCategories.sort(); index as i"
+        [ngValue]="i">
+        {{option}}
+      </option>
+      <option [ngValue]="null" disabled>---General Categories---</option>
+      <option *ngFor="let option of generalCategories.sort(); index as i"
+        [ngValue]="i+specificCategories.length">
         {{option}}
       </option>
     </select>
