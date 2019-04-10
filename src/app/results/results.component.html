@@ -1,0 +1,11 @@
+<div class="total-energy">
+  <p>Total energy consumed (J): {{ resultsData.truncatedTotalEnergy }}</p>
+  <p>Your result is in the {{resultsData.levelIndicator}} {{resultsData.percentile}}th percentile</p>
+</div>
+<div class="chart-section d-flex">
+  <app-pie-chart [data]="resultsData.hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
+  <app-pie-chart [data]="resultsData.apiData" [title]="'API Costs'"></app-pie-chart>
+</div>
+<div class="rating-container" id="rating">
+  Your app's rating: <span [class]="resultsData.ratingClass">{{ resultsData.rating }}</span>
+</div>

@@ -24,7 +24,7 @@
          [path]="'/file-upload/apk'"
          [ext]="'.apk'"
          [clear]="clear"
-         (filename)="onFilenameUpdate($event)">
+         (filename)="onFilenameUpdate($event, 0)">
       </app-dropzone-uploader>
       <app-dropzone-uploader *ngIf="methodSelected('Monkeyrunner')"
          class="ml-3 upload-item"
@@ -33,10 +33,10 @@
          [path]="'/file-upload/monkeyrunner'"
          [ext]="'.txt'"
          [clear]="clear"
-         (filename)="onScriptUpdate($event)">
+         (filename)="onScriptUpdate($event, 0)">
       </app-dropzone-uploader>
     </div>
-    <div *ngFor="let row of uploadRows; index as i; trackBy: trackByFn"
+    <div *ngFor="let row of additionalUploadRows; index as i; trackBy: trackByFn"
       class="d-flex flex-row justify-content-center upload-row">
       <app-dropzone-uploader class="upload-item"
          [hostname]="HOSTNAME"
@@ -44,7 +44,7 @@
          [path]="'/file-upload/apk'"
          [ext]="'.apk'"
          [clear]="clear"
-         (filename)="onFilenameUpdate($event)">
+         (filename)="onFilenameUpdate($event, i+1)">
       </app-dropzone-uploader>
       <app-dropzone-uploader *ngIf="methodSelected('Monkeyrunner')"
          class="ml-3 upload-item"
@@ -53,7 +53,7 @@
          [path]="'/file-upload/monkeyrunner'"
          [ext]="'.txt'"
          [clear]="clear"
-         (filename)="onScriptUpdate($event)">
+         (filename)="onScriptUpdate($event, i+1)">
       </app-dropzone-uploader>
       <div class="minus-sign">
         <i class="fas fa-minus"></i>

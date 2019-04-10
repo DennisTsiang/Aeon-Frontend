@@ -6,16 +6,11 @@
   <h2>Please upload an apk and select testing method</h2>
   <app-uploader (data)="onData($event)" (hideData)="onHideData($event)"></app-uploader>
   <div *ngIf="showData">
-    <div class="total-energy">
-      <p>Total energy consumed (J): {{ truncatedTotalEnergy }}</p>
-      <p>Your result is in the {{levelIndicator}} {{percentile}}th percentile</p>
-    </div>
-    <div class="chart-section d-flex">
-      <app-pie-chart [data]="hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
-      <app-pie-chart [data]="apiData" [title]="'API Costs'"></app-pie-chart>
-    </div>
-    <div class="rating-container" id="rating">
-      Your app's rating: <span [class]="ratingClass">{{ rating }}</span>
-    </div>
+    <app-tabbed-content [tabHeaders]="tabs" (switchTabEvent)="onSwitchTab($event)">
+      <div *ngFor="let tab of tabs; index as i" [id]="i" class="tabcontent"
+      [ngClass]="{'active': isActiveTab(i)}">
+        <app-results [resultsData]="tab"></app-results>
+      </div>
+    </app-tabbed-content>
   </div>
 </div>

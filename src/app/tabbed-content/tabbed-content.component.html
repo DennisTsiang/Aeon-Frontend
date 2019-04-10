@@ -1,0 +1,7 @@
+<div class="tab">
+  <button *ngFor="let tab of tabHeaders; index as i" class="tablinks"
+    [ngClass]="{'active': isActive(i)}"
+    (click)="switchTab(event, i)">App #{{i+1}}
+  </button>
+</div>
+<ng-content></ng-content>

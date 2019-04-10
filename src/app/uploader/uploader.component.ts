@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
+import 'rxjs/observable/interval';
 import {
   EnergyEvaluationRequest,
   EnergyDataResponse,
@@ -18,7 +19,8 @@ export class UploaderComponent implements OnInit {
 
   // TODO: Change this to an input sent from root
   public readonly HOSTNAME = "http://localhost:8081";
-  public uploadRows: number[] = [];
+  public uploadRequests: EnergyEvaluationRequest[] = [];
+  public additionalUploadRows: number[] = [];
   public filename: string = "";
   public scriptname: string = "";
   public specificCategories: string[] = [
@@ -38,31 +40,38 @@ export class UploaderComponent implements OnInit {
   public clear: Subject<boolean> = new Subject;
 
   @Output()
-  public data: EventEmitter<EnergyDataResponse> = new EventEmitter();
+  public data: EventEmitter<EnergyDataResponse[]> = new EventEmitter();
 
   @Output()
   public hideData: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    let firstUploadRow: EnergyEvaluationRequest = {} as EnergyEvaluationRequest;
+    this.uploadRequests.push(firstUploadRow);
+  }
 
   ngOnInit() {
   }
 
-  public onFilenameUpdate(filename: string): void {
-   this.filename = filename;
+  public onFilenameUpdate(filename: string, index: number): void {
+    let uploadRequest: EnergyEvaluationRequest = this.uploadRequests[index];
+    uploadRequest.filename = filename;
+    this.filename = filename;
   }
 
-  public onScriptUpdate(scriptname: string): void {
-   this.scriptname = scriptname;
+  public onScriptUpdate(scriptname: string, index: number): void {
+    let uploadRequest: EnergyEvaluationRequest = this.uploadRequests[index];
+    uploadRequest.scriptname = scriptname;
+    this.scriptname = scriptname;
   }
 
   public onUploadButtonClick(): void {
     this.showLoadingIcon = true;
     this.sendEnergyRequest()
-      .subscribe((message: EnergyDataResponse) => {
+      .subscribe((messages: EnergyDataResponse[]) => {
         console.log("Emitting data");
         this.showLoadingIcon = false;
-        this.data.emit(message);
+        this.data.emit(messages);
       });
     setTimeout(() => document.getElementById("loader")
       .scrollIntoView({behavior: 'smooth', block: "end"})
@@ -93,28 +102,37 @@ export class UploaderComponent implements OnInit {
   }
 
   public addRow(): void {
-    this.uploadRows.push(Date.now());
+    this.additionalUploadRows.push(Date.now());
+    let newUploadRequest: EnergyEvaluationRequest = {} as EnergyEvaluationRequest;
+    this.uploadRequests.push(newUploadRequest);
   }
 
   public removeRow(index): void {
-    this.uploadRows.splice(index, 1);
+    this.additionalUploadRows.splice(index, 1);
+    this.uploadRequests.splice(index+1, 1);
   }
 
   public trackByFn(index, item) {
     return item;
   }
 
-  private sendEnergyRequest(): Observable<EnergyDataResponse> {
-    let request: EnergyEvaluationRequest = {
-      filename: this.filename,
-      category: this.selectedCategory,
-      method: this.selectedTestingMethod,
-    };
-    if (this.selectedTestingMethod == "Monkeyrunner") {
-      request.scriptname = this.scriptname;
-    }
-    return this.http.post<EnergyDataResponse>(this.HOSTNAME + '/energy-eval/',
-       request)
+  private sendEnergyRequest(): Observable<EnergyDataResponse[]> {
+    let energyRequests: EnergyEvaluationRequest[] = this.uploadRequests
+    .filter(uploadRequest => {
+      if (uploadRequest.filename == undefined) return false;
+      if (this.selectedTestingMethod == 'Monkeyrunner') {
+        return uploadRequest.scriptname != undefined;
+      } else {
+        return true;
+      }
+    })
+    .map((uploadRequest) => {
+      uploadRequest.category = this.selectedCategory;
+      uploadRequest.method = this.selectedTestingMethod;
+      return uploadRequest;
+    });
+    return this.http.post<EnergyDataResponse[]>(this.HOSTNAME + '/energy-eval/',
+       energyRequests)
         .catch((error: any) => {
           console.log(error);
           console.log("Returning test data");
@@ -122,7 +140,7 @@ export class UploaderComponent implements OnInit {
         });
   }
 
-  private testData(): EnergyDataResponse {
+  private testData(): EnergyDataResponse[] {
     let hardwareDatapoints: CSVData[] = [
       ["Cell standby", 0.00123],
       ["Screen", 0.000616],
@@ -143,12 +161,24 @@ export class UploaderComponent implements OnInit {
       ["Anstop.onResume",0.0],
     ];
 
-    return {
+    let testdata1: EnergyDataResponse = {
       hardwareData: hardwareDatapoints,
       apiData: apiDatapoints,
       rating: "A",
       percentile: "34",
     };
+
+    let testdata2: EnergyDataResponse = {
+      hardwareData: hardwareDatapoints,
+      apiData: apiDatapoints,
+      rating: "B",
+      percentile: "45",
+    };
+
+    let results: EnergyDataResponse[] = [];
+    results.push(testdata1);
+    results.push(testdata2);
+    return results;
   }
 
 }

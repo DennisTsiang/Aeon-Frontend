@@ -23,3 +23,14 @@ export interface EnergyEvaluationRequest {
   category: string;
   method: string;
 }
+
+export interface ResultsData {
+  hardwareData: GraphData;
+  apiData: GraphData;
+  truncatedTotalEnergy: string;
+  rating: string;
+  ratingClass: string;
+  percentile: string;
+  levelIndicator: string;
+
+}

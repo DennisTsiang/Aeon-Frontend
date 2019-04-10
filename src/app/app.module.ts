@@ -13,6 +13,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { GraphPlotHelperService } from './services/graph-plot-helper.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DropzoneUploaderComponent } from './dropzone-uploader/dropzone-uploader.component';
+import { TabbedContentComponent } from './tabbed-content/tabbed-content.component';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DropzoneUploaderComponent } from './dropzone-uploader/dropzone-uploader
     UploaderComponent,
     PieChartComponent,
     SpinnerComponent,
-    DropzoneUploaderComponent
+    DropzoneUploaderComponent,
+    TabbedContentComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,

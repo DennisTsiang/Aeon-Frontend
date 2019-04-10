@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EnergyDataResponse, GraphData } from './model/entities';
+import { EnergyDataResponse, GraphData, ResultsData } from './model/entities';
 declare var Chart: any;
 
 @Component({
@@ -11,32 +11,31 @@ declare var Chart: any;
 export class AppComponent {
   public title = 'Aeon';
   public showData = false;
-  public hardwareData: GraphData = null;
-  public apiData: GraphData = null;
-  public truncatedTotalEnergy: string = null;
-  public rating: string = null;
-  public ratingClass: string = null;
-  public percentile: string = null;
-  public levelIndicator: string = null;
+  public tabs: ResultsData[] = [];
+  public activeTabIndex: number = 0;
 
-  public onData(energyDataResponse: EnergyDataResponse): void {
+  public onData(energyDataResponses: EnergyDataResponse[]): void {
     console.log("Received energy data response");
-    console.log(energyDataResponse);
-    let hardwareLabels = energyDataResponse.hardwareData
-      .map(dataPair => dataPair[0]);
-    let hardwareValues = energyDataResponse.hardwareData
-      .map(dataPair => dataPair[1]);
-    let apiLabels = energyDataResponse.apiData.map(dataPair => dataPair[0]);
-    let apiValues = energyDataResponse.apiData.map(dataPair => dataPair[1]);
-    let totalEnergy = hardwareValues.reduce((x,y) => x+y) +
-      apiValues.reduce((x,y) => x+y);
-    this.truncatedTotalEnergy = totalEnergy.toFixed(7);
-    this.hardwareData = { labels: hardwareLabels, values: hardwareValues };
-    this.apiData = { labels: apiLabels, values: apiValues };
-    this.rating = energyDataResponse.rating;
-    this.ratingClass = "rating-" + this.rating;
-    this.percentile = energyDataResponse.percentile;
-    this.levelIndicator = parseFloat(this.percentile) <= 50 ? "top" : "bottom";
+    console.log(energyDataResponses);
+    this.tabs = energyDataResponses.map(energyDataResponse => {
+      let resultData: ResultsData = {} as ResultsData;
+      let hardwareLabels = energyDataResponse.hardwareData
+        .map(dataPair => dataPair[0]);
+      let hardwareValues = energyDataResponse.hardwareData
+        .map(dataPair => dataPair[1]);
+      let apiLabels = energyDataResponse.apiData.map(dataPair => dataPair[0]);
+      let apiValues = energyDataResponse.apiData.map(dataPair => dataPair[1]);
+      let totalEnergy = hardwareValues.reduce((x,y) => x+y) +
+        apiValues.reduce((x,y) => x+y);
+      resultData.truncatedTotalEnergy = totalEnergy.toFixed(7);
+      resultData.hardwareData = { labels: hardwareLabels, values: hardwareValues };
+      resultData.apiData = { labels: apiLabels, values: apiValues };
+      resultData.rating = energyDataResponse.rating;
+      resultData.ratingClass = "rating-" + resultData.rating;
+      resultData.percentile = energyDataResponse.percentile;
+      resultData.levelIndicator = parseFloat(resultData.percentile) <= 50 ? "top" : "bottom";
+      return resultData;
+    });
     this.showData = true;
     setTimeout(() => document.getElementById("rating")
       .scrollIntoView({behavior: 'smooth', block: "end"})
@@ -45,6 +44,14 @@ export class AppComponent {
 
   public onHideData() {
     this.showData = false;
+  }
+
+  public onSwitchTab(index: number): void {
+    this.activeTabIndex = index;
+  }
+
+  public isActiveTab(index: number): boolean {
+    return this.activeTabIndex == index;
   }
 
 }
