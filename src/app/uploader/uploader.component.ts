@@ -7,7 +7,8 @@ import 'rxjs/observable/interval';
 import {
   EnergyEvaluationRequest,
   EnergyDataResponse,
-  CSVData
+  CSVData,
+  FilePathObject
 } from '../model/entities';
 
 @Component({
@@ -95,6 +96,7 @@ export class UploaderComponent implements OnInit {
     this.scriptname = "";
     this.selectedCategory = null;
     this.hideData.emit(true);
+    this.sendClearRequest().subscribe();
   }
 
   public methodSelected(selection: string): boolean {
@@ -114,6 +116,28 @@ export class UploaderComponent implements OnInit {
 
   public trackByFn(index, item) {
     return item;
+  }
+
+  private sendClearRequest(): Observable<boolean> {
+    let fileObj: FilePathObject = {apps: [], scripts: []};
+    this.uploadRequests
+    .forEach(uploadRequest => {
+      if (uploadRequest.filename != undefined && uploadRequest.filename != "") {
+        fileObj.apps.push(uploadRequest.filename);
+      }
+      if (uploadRequest.scriptname != undefined &&
+          uploadRequest.scriptname != "") {
+        fileObj.scripts.push(uploadRequest.scriptname);
+      }
+    });
+    if (fileObj.apps.length == 0 && fileObj.scripts.length == 0) {
+      return Observable.of(true);
+    }
+    return this.http.post<boolean>(this.HOSTNAME + '/clear/', fileObj)
+      .catch((error: any) => {
+        console.log(error);
+        return Observable.of(false);
+      });
   }
 
   private sendEnergyRequest(): Observable<EnergyDataResponse[]> {

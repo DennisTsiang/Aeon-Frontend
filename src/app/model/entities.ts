@@ -34,3 +34,8 @@ export interface ResultsData {
   levelIndicator: string;
 
 }
+
+export interface FilePathObject {
+  apps: string[];
+  scripts: string[];
+}
