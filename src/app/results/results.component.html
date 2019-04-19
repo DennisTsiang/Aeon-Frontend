@@ -9,3 +9,7 @@
 <div class="rating-container" id="rating">
   Your app's rating: <span [class]="resultsData.ratingClass">{{ resultsData.rating }}</span>
 </div>
+<div class="coverage-container" id="coverage">
+  Statement Coverage: {{ resultsData.statementCoverage}}%
+  <a *ngIf="hasCoverage()" [href]="reportLink()" download><i class="fas fa-download" ></i></a>
+</div>

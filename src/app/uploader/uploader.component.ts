@@ -190,6 +190,8 @@ export class UploaderComponent implements OnInit {
       apiData: apiDatapoints,
       rating: "A",
       percentile: "34",
+      statementCoverage: "51",
+      reportFilename: null
     };
 
     let testdata2: EnergyDataResponse = {
@@ -197,6 +199,8 @@ export class UploaderComponent implements OnInit {
       apiData: apiDatapoints,
       rating: "B",
       percentile: "45",
+      statementCoverage: "51",
+      reportFilename: null,
     };
 
     let results: EnergyDataResponse[] = [];

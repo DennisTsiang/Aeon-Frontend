@@ -34,10 +34,16 @@ export class AppComponent {
       resultData.ratingClass = "rating-" + resultData.rating;
       resultData.percentile = energyDataResponse.percentile;
       resultData.levelIndicator = parseFloat(resultData.percentile) <= 50 ? "top" : "bottom";
+      resultData.statementCoverage = energyDataResponse.statementCoverage == null ?
+        "N/A":
+        parseFloat(energyDataResponse
+        .statementCoverage)
+        .toFixed(2);
+      resultData.reportFilename = energyDataResponse.reportFilename;
       return resultData;
     });
     this.showData = true;
-    setTimeout(() => document.getElementById("rating")
+    setTimeout(() => document.getElementById("coverage")
       .scrollIntoView({behavior: 'smooth', block: "end"})
     , 1000);
   }

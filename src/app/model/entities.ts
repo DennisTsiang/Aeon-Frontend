@@ -15,6 +15,8 @@ export interface EnergyDataResponse {
   apiData: CSVData[] | null;
   rating: string;
   percentile: string;
+  statementCoverage: string;
+  reportFilename: string;
 }
 
 export interface EnergyEvaluationRequest {
@@ -32,7 +34,8 @@ export interface ResultsData {
   ratingClass: string;
   percentile: string;
   levelIndicator: string;
-
+  statementCoverage: string;
+  reportFilename: string;
 }
 
 export interface FilePathObject {

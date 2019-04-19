@@ -6,14 +6,26 @@ import { ResultsData, GraphData } from '../model/entities';
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css']
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent {
 
   @Input()
   public resultsData: ResultsData = {} as ResultsData;
 
+  // TODO: Change this to an input sent from root
+  public readonly HOSTNAME = "http://localhost:8081";
+
   constructor() { }
 
-  ngOnInit() {
+  public hasCoverage(): boolean {
+    return this.resultsData.reportFilename != null;
+  }
+
+  public reportLink(): string {
+    if (!this.hasCoverage()) {
+      return "";
+    }
+
+    return this.HOSTNAME+"/reports/"+this.resultsData.reportFilename;
   }
 
 }
