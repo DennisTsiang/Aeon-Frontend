@@ -28,4 +28,15 @@ export class ResultsComponent {
     return this.HOSTNAME+"/reports/"+this.resultsData.reportFilename;
   }
 
+  public hasSourcelineFeedback(): boolean {
+    return this.resultsData.sourcelineFeedbackFilename != null;
+  }
+
+  public sourcelineFeedbackLink(): string {
+    if (!this.hasSourcelineFeedback()) {
+      return "";
+    }
+    return this.HOSTNAME+"/sourcelinefeedback/"+this.resultsData.sourcelineFeedbackFilename;
+  }
+
 }

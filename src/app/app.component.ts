@@ -40,6 +40,7 @@ export class AppComponent {
         .statementCoverage)
         .toFixed(2);
       resultData.reportFilename = energyDataResponse.reportFilename;
+      resultData.sourcelineFeedbackFilename = energyDataResponse.sourcelineFeedbackFilename;
       return resultData;
     });
     this.showData = true;

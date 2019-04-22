@@ -1,6 +1,9 @@
 <div class="total-energy">
   <p>Total energy consumed (J): {{ resultsData.truncatedTotalEnergy }}</p>
   <p>Your result is in the {{resultsData.levelIndicator}} {{resultsData.percentile}}th percentile</p>
+  <p *ngIf="hasSourcelineFeedback()">
+    <a [href]="sourcelineFeedbackLink()" download>Download source line feedback</a>
+  </p>
 </div>
 <div class="chart-section d-flex">
   <app-pie-chart [data]="resultsData.hardwareData" [title]="'Hardware Costs'"></app-pie-chart>
@@ -11,5 +14,7 @@
 </div>
 <div class="coverage-container" id="coverage">
   Statement Coverage: {{ resultsData.statementCoverage}}%
-  <a *ngIf="hasCoverage()" [href]="reportLink()" download><i class="fas fa-download" ></i></a>
+  <a title="Download statement coverage report in HTML format" *ngIf="hasCoverage()" [href]="reportLink()" download>
+    <i class="fas fa-download" ></i>
+  </a>
 </div>

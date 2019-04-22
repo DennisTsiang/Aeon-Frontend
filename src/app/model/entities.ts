@@ -17,6 +17,7 @@ export interface EnergyDataResponse {
   percentile: string;
   statementCoverage: string;
   reportFilename: string;
+  sourcelineFeedbackFilename: string;
 }
 
 export interface EnergyEvaluationRequest {
@@ -36,6 +37,7 @@ export interface ResultsData {
   levelIndicator: string;
   statementCoverage: string;
   reportFilename: string;
+  sourcelineFeedbackFilename: string;
 }
 
 export interface FilePathObject {
