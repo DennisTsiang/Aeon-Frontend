@@ -39,4 +39,8 @@ export class ResultsComponent {
     return this.HOSTNAME+"/sourcelinefeedback/"+this.resultsData.sourcelineFeedbackFilename;
   }
 
+  public hasRuntime() {
+    return this.resultsData.runtime != null;
+  }
+
 }

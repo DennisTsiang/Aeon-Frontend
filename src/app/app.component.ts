@@ -41,6 +41,7 @@ export class AppComponent {
         .toFixed(2);
       resultData.reportFilename = energyDataResponse.reportFilename;
       resultData.sourcelineFeedbackFilename = energyDataResponse.sourcelineFeedbackFilename;
+      resultData.runtime = parseFloat(energyDataResponse.runtime);
       return resultData;
     });
     this.showData = true;

@@ -1,4 +1,5 @@
 <div class="total-energy">
+  <p *ngIf="hasRuntime()">Simulation ran for {{resultsData.runtime}} seconds</p>
   <p>Total energy consumed (J): {{ resultsData.truncatedTotalEnergy }}</p>
   <p>Your result is in the {{resultsData.levelIndicator}} {{resultsData.percentile}}th percentile</p>
   <p *ngIf="hasSourcelineFeedback()">

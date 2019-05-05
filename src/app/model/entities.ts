@@ -18,6 +18,7 @@ export interface EnergyDataResponse {
   statementCoverage: string;
   reportFilename: string;
   sourcelineFeedbackFilename: string;
+  runtime: string;
 }
 
 export interface EnergyEvaluationRequest {
@@ -25,6 +26,7 @@ export interface EnergyEvaluationRequest {
   scriptname?: string;
   category: string;
   method: string;
+  statementCoverage: boolean;
 }
 
 export interface ResultsData {
@@ -38,6 +40,7 @@ export interface ResultsData {
   statementCoverage: string;
   reportFilename: string;
   sourcelineFeedbackFilename: string;
+  runtime: number;
 }
 
 export interface FilePathObject {

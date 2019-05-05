@@ -25,7 +25,8 @@ export class UploaderComponent implements OnInit {
   public filename: string = "";
   public scriptname: string = "";
   public specificCategories: string[] = [
-    "Alarm Clocks", "Dictionary", "Reddit Browsers", "Web Browsers"
+    "Alarm Clocks", "Dictionary", "Reddit Browsers", "Web Browsers",
+    "Email Clients"
   ];
   public generalCategories: string[] = [
     "News", "Gaming", "Business", "Social Media", "Lifestyle", "Productivity",
@@ -35,9 +36,10 @@ export class UploaderComponent implements OnInit {
     "Monkeyrunner", "DroidMate-2"
   ];
   // Also sets default selected option to one with value of null
-  public selectedCategory: string = null;
+  public selectedCategory: number = null;
   public selectedTestingMethod: string = "DroidMate-2";
   public showLoadingIcon: boolean = false;
+  public statementCoverage: boolean = false;
   public clear: Subject<boolean> = new Subject;
 
   @Output()
@@ -82,7 +84,7 @@ export class UploaderComponent implements OnInit {
 
   public isDisabled(): boolean {
     return (this.filename == ""
-      || !this.selectedCategory || !this.selectedTestingMethod) ||
+      || this.selectedCategory == null || !this.selectedTestingMethod) ||
       (this.selectedTestingMethod == 'Monkeyrunner' && !this.scriptname);
 }
 
@@ -151,8 +153,9 @@ export class UploaderComponent implements OnInit {
       }
     })
     .map((uploadRequest) => {
-      uploadRequest.category = this.selectedCategory;
+      uploadRequest.category = this.selectedCategory.toString();
       uploadRequest.method = this.selectedTestingMethod;
+      uploadRequest.statementCoverage = this.statementCoverage;
       return uploadRequest;
     });
     return this.http.post<EnergyDataResponse[]>(this.HOSTNAME + '/energy-eval/',
@@ -193,6 +196,7 @@ export class UploaderComponent implements OnInit {
       statementCoverage: "51",
       reportFilename: null,
       sourcelineFeedbackFilename: null,
+      runtime: "25",
     };
 
     let testdata2: EnergyDataResponse = {
@@ -203,6 +207,7 @@ export class UploaderComponent implements OnInit {
       statementCoverage: "51",
       reportFilename: null,
       sourcelineFeedbackFilename: null,
+      runtime: "25",
     };
 
     let results: EnergyDataResponse[] = [];
