@@ -11,8 +11,8 @@ export class ResultsComponent {
   @Input()
   public resultsData: ResultsData = {} as ResultsData;
 
-  // TODO: Change this to an input sent from root
-  public readonly HOSTNAME = "http://localhost:8081";
+  @Input()
+  public HOSTNAME = "";
 
   constructor() { }
 

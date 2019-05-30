@@ -4,12 +4,13 @@
   </h1>
   <img width="300" alt="Aeon Logo" src="assets/aeon.png"/>
   <h2>Please upload an apk and select testing method</h2>
-  <app-uploader (data)="onData($event)" (hideData)="onHideData($event)"></app-uploader>
+  <app-uploader (data)="onData($event)" (hideData)="onHideData($event)"
+    [HOSTNAME]="HOSTNAME"></app-uploader>
   <div *ngIf="showData">
     <app-tabbed-content [tabHeaders]="tabs" (switchTabEvent)="onSwitchTab($event)">
       <div *ngFor="let tab of tabs; index as i" [id]="i" class="tabcontent"
       [ngClass]="{'active': isActiveTab(i)}">
-        <app-results [resultsData]="tab"></app-results>
+        <app-results [resultsData]="tab" [HOSTNAME]="HOSTNAME"></app-results>
       </div>
     </app-tabbed-content>
   </div>

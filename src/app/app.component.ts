@@ -13,6 +13,7 @@ export class AppComponent {
   public showData = false;
   public tabs: ResultsData[] = [];
   public activeTabIndex: number = 0;
+  public readonly HOSTNAME = "http://localhost:8081";
 
   public onData(energyDataResponses: EnergyDataResponse[]): void {
     console.log("Received energy data response");

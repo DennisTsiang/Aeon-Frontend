@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
@@ -18,8 +18,8 @@ import {
 })
 export class UploaderComponent implements OnInit {
 
-  // TODO: Change this to an input sent from root
-  public readonly HOSTNAME = "http://localhost:8081";
+  @Input()
+  public HOSTNAME = "";
   public uploadRequests: EnergyEvaluationRequest[] = [];
   public additionalUploadRows: number[] = [];
   public filename: string = "";
