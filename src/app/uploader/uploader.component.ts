@@ -163,57 +163,13 @@ export class UploaderComponent implements OnInit {
         .catch((error: any) => {
           console.log(error);
           console.log("Returning test data");
-          return Observable.of(this.testData());
+          return Observable.of(this.emptyResponse());
         });
   }
 
-  private testData(): EnergyDataResponse[] {
-    let hardwareDatapoints: CSVData[] = [
-      ["Cell standby", 0.00123],
-      ["Screen", 0.000616],
-      ["Wifi", 0.000411],
-      ["Idle", 0.000411]
-    ];
-    let apiDatapoints: CSVData[] = [
-      ["Anstop$resetButtonListener.onClick",0.00518514],
-      ["Anstop.onCreate",0.000226966],
-      ["Anstop.readSettings",0.000113483],
-      ["Clock$minhandler.<init>",0.0],
-      ["Anstop.onRestoreInstanceState",0.0],
-      ["Anstop.setupGesture",0.0],
-      ["Clock$sechandler.<init>",0.0],
-      ["Clock$hourhandler.<init>",0.0],
-      ["Anstop.<init>",0.0],
-      ["Clock$dsechandler.<init>",0.0],
-      ["Anstop.onResume",0.0],
-    ];
-
-    let testdata1: EnergyDataResponse = {
-      hardwareData: hardwareDatapoints,
-      apiData: apiDatapoints,
-      rating: "A",
-      percentile: "34",
-      statementCoverage: "51",
-      reportFilename: null,
-      sourcelineFeedbackFilename: null,
-      runtime: "25",
-    };
-
-    let testdata2: EnergyDataResponse = {
-      hardwareData: hardwareDatapoints,
-      apiData: apiDatapoints,
-      rating: "B",
-      percentile: "45",
-      statementCoverage: "51",
-      reportFilename: null,
-      sourcelineFeedbackFilename: null,
-      runtime: "25",
-    };
-
-    let results: EnergyDataResponse[] = [];
-    results.push(testdata1);
-    results.push(testdata2);
-    return results;
+  private emptyResponse(): EnergyDataResponse[] {
+    let emptyResponse = {} as EnergyDataResponse;
+    return [emptyResponse];
   }
 
 }
